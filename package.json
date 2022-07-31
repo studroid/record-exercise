@@ -4,10 +4,11 @@
   "description": "",
   "main": "Code.js",
   "scripts": {
-    "init": "clasp login && clasp create",
+    "init": "clasp login && clasp create --type webapp && cp Constant.js.template Constant.js && echo 'Fill in Constant.js before running' && clasp push -f",
     "push": "clasp push",
     "pull": "clasp pull",
-    "redeploy": "echo 'Enter deploymentId' && read DEPLOYMENT_ID && clasp redeploy $DEPLOYMENT_ID",
+    "deploy": "clasp deploy",
+    "redeploy": "clasp deployments && echo 'Enter deploymentId' && read DEPLOYMENT_ID && clasp deploy --deploymentId $DEPLOYMENT_ID",
     "test": "clasp open && echo 'Test.gs 파일을 열고 TestAll 함수를 실행하세요.'",
     "help": "clasp --help"
   },

@@ -31,9 +31,8 @@ Give examples
 
 설치 과정
 
-
-```
-예시 코드
+```sh
+npm install -g @google/clasp
 ```
 
 이후
@@ -44,9 +43,9 @@ Give examples
 
 결과 예시
 
-### 설정하기
+### 설정
 
-경우에 따라
+https://script.google.com/home/usersettings -> Enable Apps Script API
 
 ### 실행하기
 
