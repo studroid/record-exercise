@@ -21,6 +21,7 @@ with Google Apps Script, clasp, Slack bot
 ### 사전 준비
 
 - [About clasp](https://developers.google.com/apps-script/guides/clasp)
+  - [GitHub Repository](https://github.com/google/clasp)
 
 ```
 Give examples
