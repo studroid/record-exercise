@@ -1,0 +1,29 @@
+{
+  "name": "record-exercise",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Code.js",
+  "scripts": {
+    "init": "clasp login && clasp create",
+    "push": "clasp push",
+    "pull": "clasp pull",
+    "redeploy": "echo 'Enter deploymentId' && read DEPLOYMENT_ID && clasp redeploy $DEPLOYMENT_ID",
+    "test": "clasp open && echo 'Test.gs 파일을 열고 TestAll 함수를 실행하세요.'",
+    "help": "clasp --help"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/studroid/record-exercise.git"
+  },
+  "keywords": [
+    "AppsScript",
+    "clasp",
+    "Slack"
+  ],
+  "author": "James",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/studroid/record-exercise/issues"
+  },
+  "homepage": "https://github.com/studroid/record-exercise#readme"
+}

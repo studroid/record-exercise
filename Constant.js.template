@@ -1,4 +1,14 @@
+// Spreadsheet
 const SHEET_ID = ""
 const SHEET_NAME = ""
 
+// Slack
 const SLACK_BOT_TOKEN = "";
+
+// Log
+const LOG_SHEET_ID = "";
+const LOG_SHEET_NAME = "";
+
+// Test
+const TEST_USER_ID = "";
+const TEST_USER_NAME = "";
