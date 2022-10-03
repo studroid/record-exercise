@@ -37,9 +37,9 @@ class TestCases {
   }
 
   getTargetRowTest() {
-    const currentTime = new Date(2021, 9, 27, 4, 37, 30);
+    const currentTime = new Date(2022, 9, 4, 4, 37, 30);
     const targetRow = getTargetRow(currentTime);
-    assert(targetRow, 339)
+    assert(targetRow, 280)
   }
 
   recordExerciseTimeTest() {
