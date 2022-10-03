@@ -9,7 +9,8 @@ class SlackAPI {
       'user': userId,
     };
 
-    return this._callAPI("get", "users.info", payload).user.profile.display_name;
+    const user = this._callAPI("get", "users.info", payload).user;
+    return user.profile.display_name === "" ? user.real_name : user.profile.display_name;
   }
 
   reactWithEmoji(slackEvent) {
