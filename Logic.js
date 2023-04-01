@@ -58,7 +58,7 @@ function getTargetRange(targetTime, userName) {
 }
 
 function getTargetColumn(userName) {
-  const userNameCell = SHEET.createTextFinder(userName).findNext();
+  const userNameCell = SHEET.createTextFinder(userName).matchEntireCell(true).findNext();
   return userNameCell.getColumn();
 }
 
