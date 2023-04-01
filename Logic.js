@@ -12,7 +12,8 @@ function isRecordMessage(text) {
 }
 
 function recordExerciseTime(text, userName) {
-  const targetTime = getTargetTime(text);
+  const currentTime = new Date();
+  const targetTime = getTargetTime(currentTime, text);
 
   const strTime = getTimesToRecord(targetTime);
   getTargetRange(targetTime, userName)
@@ -23,14 +24,14 @@ function recordExerciseTime(text, userName) {
 
 // Private methods
 
-function getTargetTime(text) {
+function getTargetTime(currentTime, text) {
   // TODO: Set time according to the text received
   // Example: !운동기록 어제 10:00 1h, !운동기록 10:00
-  const baseTime = new Date();
+  const targetTime = new Date(currentTime);
   if (text.includes("어제")) {
-    baseTime.setDate(baseTime.getDate() - 1);
+    targetTime.setDate(targetTime.getDate() - 1);
   }
-  return baseTime;
+  return targetTime;
 }
 
 function getTimesToRecord(targetTime) {

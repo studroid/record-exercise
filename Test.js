@@ -17,6 +17,18 @@ class TestCases {
     assert(isRecordMessage("!운"), false);
   }
 
+  getTargetTimeTest() {
+    const currentTime = new Date();
+    const yesterdayTime = new Date(currentTime);
+    yesterdayTime.setDate(currentTime.getDate() - 1);
+
+    const todayTargetTime = getTargetTime(currentTime, "!운동");
+    const yesterdayTargetTime = getTargetTime(currentTime, "!운동 어제");
+
+    assert(todayTargetTime.getTime(), currentTime.getTime());
+    assert(yesterdayTargetTime.getTime(), yesterdayTime.getTime());
+  }
+
   getTimesToRecordTest() {
     const currentTime1 = new Date(1991, 0, 22, 4, 24, 30);
     assert(getTimesToRecord(currentTime1), "03:00~04:00");
