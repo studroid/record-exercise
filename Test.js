@@ -1,5 +1,5 @@
 function assert(a, b) {
-  if(a !== b) {
+  if (a !== b) {
     console.error(`${a} must be ${b}`);
   }
 }
@@ -51,7 +51,7 @@ class TestCases {
   getTargetRowTest() {
     const currentTime = new Date(2022, 9, 4, 4, 37, 30);
     const targetRow = getTargetRow(currentTime);
-    assert(targetRow, 280)
+    assert(targetRow, 280);
   }
 
   recordExerciseTimeTest() {
@@ -65,8 +65,8 @@ class TestCases {
 
 function TestAll() {
   const testCases = new TestCases();
-  for(method of Object.getOwnPropertyNames(TestCases.prototype)) {
-    if(method !== 'constructor') {
+  for (method of Object.getOwnPropertyNames(TestCases.prototype)) {
+    if (method !== "constructor") {
       testCases[method]();
     }
   }
