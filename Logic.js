@@ -43,6 +43,18 @@ function buildGeminiContents(threadMessages, fallbackText) {
   });
 }
 
+const GEMINI_FAILURE_MESSAGES = [
+  "에... 머리가 잠깐 멎었슴다 ^^7 다시 여쭤봐 주시죠",
+  "크흠... 뇌세포 쉬는 시간인감요. 잠시 후 다시 부탁드립니닷",
+  "어음... 비범한 사람에게도 쉬는 시간이 필요합니닷 ^^7",
+  "아잇 잠쉬만요호오오... 금방 돌아오겟슴다",
+];
+
+function pickFailureMessage() {
+  const i = Math.floor(Math.random() * GEMINI_FAILURE_MESSAGES.length);
+  return GEMINI_FAILURE_MESSAGES[i];
+}
+
 function buildLengthHint(userText) {
   const length = typeof userText === "string" ? userText.length : 0;
   let band;

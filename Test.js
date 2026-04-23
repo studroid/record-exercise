@@ -97,6 +97,15 @@ class TestCases {
     );
   }
 
+  pickFailureMessageTest() {
+    for (let i = 0; i < 20; i++) {
+      const msg = pickFailureMessage();
+      assert(typeof msg === "string", true);
+      assert(msg.length > 0, true);
+      assert(GEMINI_FAILURE_MESSAGES.indexOf(msg) !== -1, true);
+    }
+  }
+
   buildLengthHintTest() {
     assert(buildLengthHint("").includes("0자다"), true);
     assert(buildLengthHint("짧은 말").includes("한 줄 이내"), true);

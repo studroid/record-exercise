@@ -101,9 +101,8 @@ function doPost(e) {
     console.error("Gemini generate failed: " + err);
   }
 
-  if (replyText) {
-    slackAPI.postThreadMessage(slackEvent.channel, threadRoot, replyText);
-  }
+  const outgoingText = replyText || pickFailureMessage();
+  slackAPI.postThreadMessage(slackEvent.channel, threadRoot, outgoingText);
 }
 
 function doGet(e) {
