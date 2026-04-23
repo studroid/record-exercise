@@ -259,41 +259,30 @@ git commit -m "feat: doPost를 '제임스!' 매칭 → 스레드 답장 + 로그
 ### Task 5: 운동기록 전용 참고 파일 삭제
 
 **Files:**
-- Delete: `examples/SampleData.js`
-- Delete: `examples/References.js`
-- Delete: `examples/` (빈 디렉토리)
-- Delete: `reference.py`
+- Delete: `examples/` (디렉토리 전체, `.gitignore`로 이미 무시 중)
+- Delete: `reference.py` (추적되지 않은 파일)
 
-- [ ] **Step 1: 삭제 실행**
+> **주의:** `examples/`는 `.gitignore`에 포함되어 있고, `reference.py`는 Git에 한 번도 추적된 적 없는 파일이다. 따라서 `git rm`을 사용할 수 없다. 작업 트리에서만 삭제하면 되고, 이 Task 자체로는 커밋할 내용이 없다(스테이징할 것이 없음).
 
-```bash
-git rm examples/SampleData.js examples/References.js reference.py
-rmdir examples 2>/dev/null || true
-```
-
-(`git rm`은 파일을 지우며 스테이징까지 수행한다. `examples` 디렉토리는 내부 파일이 모두 삭제되면 `rmdir`로 제거된다. `.DS_Store`가 남아 있어 `rmdir`이 실패해도 무시한다.)
-
-- [ ] **Step 2: `examples/.DS_Store` 잔존 여부 확인 및 정리**
+- [ ] **Step 1: 작업 트리에서 삭제**
 
 ```bash
-ls examples 2>/dev/null
+rm -rf examples reference.py
 ```
 
-결과가 `.DS_Store`만 보이면 아래로 정리:
+- [ ] **Step 2: 삭제 확인**
 
 ```bash
-rm -f examples/.DS_Store
-rmdir examples
+ls examples 2>/dev/null; ls reference.py 2>/dev/null; echo "---"; git status
 ```
 
-디렉토리가 이미 사라졌다면 이 단계는 건너뛴다.
+예상:
+- 위 `ls` 두 줄은 아무 것도 출력하지 않거나 `No such file or directory` 에러를 낸다.
+- `git status`는 `nothing to commit, working tree clean` (직전 Task의 커밋 상태) 또는 staged 변경이 없는 상태를 보인다. `examples/`와 `reference.py`가 Untracked 목록에서도 사라진다.
 
-- [ ] **Step 3: 커밋**
+- [ ] **Step 3: 커밋 없음 — 이 Task는 작업 트리 정리로 종료**
 
-```bash
-git add -A
-git commit -m "chore: 운동기록 전용 참고 파일(examples/, reference.py) 삭제"
-```
+별도 커밋을 남기지 않는다. Git이 추적하지 않는 파일 삭제라 커밋할 변경이 없다.
 
 ---
 
