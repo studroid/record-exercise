@@ -1,30 +1,26 @@
 function doPost(e) {
   const appEvent = getAppEventBodyAsObject(e);
-  if(appEvent.type === "url_verification") {
+  if (appEvent.type === "url_verification") {
     return ContentService.createTextOutput(appEvent.challenge);
   }
 
   const slackEvent = appEvent.event;
   const text = slackEvent.text;
-  const userId = slackEvent.user;
 
-  const slackAPI = new SlackAPI(SLACK_BOT_TOKEN);
-  const userDisplayName = slackAPI.getDisplayNameFromUserId(userId)
-
-  // logPostEventToSheet(e);
-  logTextToSheet(text);
-
-  if(!isRecordMessage(text)) {
+  if (!isRespondTarget(text)) {
     return;
   }
 
-  recordExerciseTime(text, userDisplayName);
+  logTextToSheet(text);
 
+  const threadTs = slackEvent.thread_ts || slackEvent.ts;
+  const slackAPI = new SlackAPI(SLACK_BOT_TOKEN);
+  slackAPI.postThreadMessage(slackEvent.channel, threadTs, REPLY_TEXT);
   slackAPI.reactWithEmoji(slackEvent);
 }
 
 function doGet(e) {
-  return ContentService.createTextOutput("운동 기록!");
+  return ContentService.createTextOutput("제임스 인사봇!");
 }
 
 function getAppEventBodyAsObject(e) {
