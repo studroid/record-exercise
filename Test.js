@@ -4,6 +4,14 @@ function assert(a, b) {
   }
 }
 
+function assertDeep(a, b) {
+  const sa = JSON.stringify(a);
+  const sb = JSON.stringify(b);
+  if (sa !== sb) {
+    console.error(`${sa} must be ${sb}`);
+  }
+}
+
 class TestCases {
   init() {
     console.log("테스트 시작");
@@ -16,6 +24,48 @@ class TestCases {
     assert(isRespondTarget("제임스"), false);
     assert(isRespondTarget("안녕 제임스!"), false);
     assert(isRespondTarget(""), false);
+  }
+
+  isTriggeredThreadTest() {
+    assert(isTriggeredThread([]), false);
+    assert(isTriggeredThread([{ text: "제임스! 안녕", ts: "1.0" }]), true);
+    assert(isTriggeredThread([{ text: "안녕", ts: "1.0" }]), false);
+    assert(
+      isTriggeredThread([
+        { text: "제임스! 밥", ts: "1.0" },
+        { text: "뭐 먹을까", ts: "2.0" },
+      ]),
+      true
+    );
+    assert(
+      isTriggeredThread([
+        { text: "밥 먹자", ts: "1.0" },
+        { text: "제임스! 추천", ts: "2.0" },
+      ]),
+      false
+    );
+  }
+
+  buildGeminiContentsTest() {
+    assertDeep(buildGeminiContents([], "hello"), [
+      { role: "user", parts: [{ text: "hello" }] },
+    ]);
+
+    assertDeep(
+      buildGeminiContents(
+        [
+          { text: "제임스! 밥", ts: "1.0" },
+          { text: "오오~ 뭐 드실래요?", ts: "2.0", bot_id: "B01" },
+          { text: "치킨", ts: "3.0" },
+        ],
+        "fallback-ignored"
+      ),
+      [
+        { role: "user", parts: [{ text: "제임스! 밥" }] },
+        { role: "model", parts: [{ text: "오오~ 뭐 드실래요?" }] },
+        { role: "user", parts: [{ text: "치킨" }] },
+      ]
+    );
   }
 
   finish() {
