@@ -92,7 +92,12 @@ function doPost(e) {
   const contents = buildGeminiContents(annotatedMessages, fallbackText);
   const geminiAPI = new GeminiAPI(GEMINI_API_KEY, GEMINI_MODEL);
 
-  const systemInstruction = PERSONA_PROMPT + "\n\n" + buildLengthHint(slackEvent.text);
+  const systemInstruction =
+    PERSONA_PROMPT +
+    "\n\n" +
+    buildToneCalibration() +
+    "\n\n" +
+    buildLengthHint(slackEvent.text);
 
   let result;
   try {

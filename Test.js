@@ -113,6 +113,14 @@ class TestCases {
     assert(pickFailureMessage("rate_limit").includes("한도"), true);
   }
 
+  buildToneCalibrationTest() {
+    const out = buildToneCalibration();
+    assert(typeof out === "string", true);
+    assert(out.includes("톤 미세조정"), true);
+    assert(out.includes("차분"), true);
+    assert(out.includes('"^^7"'), true);
+  }
+
   buildLengthHintTest() {
     assert(buildLengthHint("").includes("0자다"), true);
     assert(buildLengthHint("짧은 말").includes("한 줄 이내"), true);
