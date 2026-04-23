@@ -3,14 +3,15 @@ class SlackAPI {
     this.botToken = botToken;
   }
 
-  getDisplayNameFromUserId(userId) {
+  postThreadMessage(channel, threadTs, text) {
     const payload = {
       'token': this.botToken,
-      'user': userId,
+      'channel': channel,
+      'thread_ts': threadTs,
+      'text': text,
     };
 
-    const user = this._callAPI("get", "users.info", payload).user;
-    return user.profile.display_name === "" ? user.real_name : user.profile.display_name;
+    this._callAPI("post", "chat.postMessage", payload);
   }
 
   reactWithEmoji(slackEvent) {
@@ -23,7 +24,7 @@ class SlackAPI {
 
     this._callAPI("post", "reactions.add", payload);
   }
-  
+
   _callAPI(httpMethod, apiMethod, payload) {
     const option = {
       'method': httpMethod,
@@ -34,4 +35,3 @@ class SlackAPI {
     return JSON.parse(response.getContentText());
   }
 }
-  
