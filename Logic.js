@@ -43,6 +43,21 @@ function buildGeminiContents(threadMessages, fallbackText) {
   });
 }
 
+function isFirstBotResponseInThread(threadMessages) {
+  if (!threadMessages || threadMessages.length === 0) return true;
+  for (let i = 0; i < threadMessages.length; i++) {
+    if (threadMessages[i].bot_id) return false;
+  }
+  return true;
+}
+
+function buildCommandHint() {
+  return (
+    "\n\n" +
+    '> 💡 `제임스 그만해!`로 멈출 수 있고, `제임스 다시 시작해!`로 다시 부를 수 있습니다.'
+  );
+}
+
 const GEMINI_FAILURE_MESSAGES = {
   rate_limit:
     "크흠... Gemini 호출 한도를 다 썼습니다. 잠시 후 다시 여쭤 주시죠 ^^",

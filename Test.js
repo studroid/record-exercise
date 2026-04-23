@@ -113,6 +113,34 @@ class TestCases {
     assert(pickFailureMessage("rate_limit").includes("한도"), true);
   }
 
+  isFirstBotResponseInThreadTest() {
+    assert(isFirstBotResponseInThread([]), true);
+    assert(isFirstBotResponseInThread(null), true);
+    assert(isFirstBotResponseInThread(undefined), true);
+    assert(isFirstBotResponseInThread([{ text: "제임스! 안녕", ts: "1" }]), true);
+    assert(
+      isFirstBotResponseInThread([
+        { text: "제임스! 안녕", ts: "1" },
+        { text: "와썹", ts: "2" },
+      ]),
+      true
+    );
+    assert(
+      isFirstBotResponseInThread([
+        { text: "제임스! 안녕", ts: "1" },
+        { text: "오오~ 반갑슴다", ts: "2", bot_id: "B01" },
+      ]),
+      false
+    );
+  }
+
+  buildCommandHintTest() {
+    const hint = buildCommandHint();
+    assert(typeof hint === "string", true);
+    assert(hint.includes("제임스 그만해!"), true);
+    assert(hint.includes("제임스 다시 시작해!"), true);
+  }
+
   buildToneCalibrationTest() {
     const out = buildToneCalibration();
     assert(typeof out === "string", true);

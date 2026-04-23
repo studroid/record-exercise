@@ -107,8 +107,11 @@ function doPost(e) {
     result = { ok: false, reason: "network" };
   }
 
-  const outgoingText =
+  let outgoingText =
     result && result.ok ? result.text : pickFailureMessage(result && result.reason);
+  if (isFirstBotResponseInThread(threadMessages)) {
+    outgoingText = outgoingText + buildCommandHint();
+  }
   slackAPI.postThreadMessage(slackEvent.channel, threadRoot, outgoingText);
 }
 
