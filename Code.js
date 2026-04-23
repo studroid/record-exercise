@@ -49,6 +49,7 @@ function doPost(e) {
   }
 
   logTextToSheet(slackEvent.text);
+  slackAPI.reactWithEmoji(slackEvent);
 
   const contents = buildGeminiContents(threadMessages, slackEvent.text);
   const geminiAPI = new GeminiAPI(GEMINI_API_KEY, GEMINI_MODEL);
@@ -63,8 +64,6 @@ function doPost(e) {
   if (replyText) {
     slackAPI.postThreadMessage(slackEvent.channel, threadRoot, replyText);
   }
-
-  slackAPI.reactWithEmoji(slackEvent);
 }
 
 function doGet(e) {
