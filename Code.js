@@ -41,6 +41,19 @@ function doPost(e) {
     return;
   }
 
+  if (isMuteCommand(slackEvent.text) || isUnmuteCommand(slackEvent.text)) {
+    try {
+      slackAPI.reactWithEmoji(slackEvent);
+    } catch (err) {
+      console.error("reactWithEmoji failed: " + err);
+    }
+    return;
+  }
+
+  if (isThreadMuted(threadMessages)) {
+    return;
+  }
+
   const lockKey = "lock:" + threadRoot;
   cache.put(lockKey, slackEvent.ts, DEBOUNCE_LOCK_TTL_SEC);
   Utilities.sleep(DEBOUNCE_DELAY_MS);

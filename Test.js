@@ -46,6 +46,57 @@ class TestCases {
     );
   }
 
+  isMuteUnmuteCommandTest() {
+    assert(isMuteCommand("제임스 그만해!"), true);
+    assert(isMuteCommand("제임스 그만해! 오늘은 쉬어요"), true);
+    assert(isMuteCommand("제임스 그만"), false);
+    assert(isMuteCommand("제임스!"), false);
+    assert(isMuteCommand(""), false);
+
+    assert(isUnmuteCommand("제임스 다시 시작해!"), true);
+    assert(isUnmuteCommand("제임스 다시 시작해! 와썹~"), true);
+    assert(isUnmuteCommand("제임스 다시"), false);
+    assert(isUnmuteCommand(""), false);
+  }
+
+  isThreadMutedTest() {
+    assert(isThreadMuted([]), false);
+    assert(isThreadMuted([{ text: "제임스! 안녕", ts: "1" }]), false);
+    assert(
+      isThreadMuted([
+        { text: "제임스! 안녕", ts: "1" },
+        { text: "오오~", ts: "2", bot_id: "B01" },
+        { text: "제임스 그만해!", ts: "3" },
+      ]),
+      true
+    );
+    assert(
+      isThreadMuted([
+        { text: "제임스! 안녕", ts: "1" },
+        { text: "제임스 그만해!", ts: "2" },
+        { text: "제임스 다시 시작해!", ts: "3" },
+      ]),
+      false
+    );
+    assert(
+      isThreadMuted([
+        { text: "제임스! 밥", ts: "1" },
+        { text: "제임스 그만해!", ts: "2" },
+        { text: "제임스 다시 시작해!", ts: "3" },
+        { text: "제임스 그만해!", ts: "4" },
+      ]),
+      true
+    );
+    // bot_id 메시지는 무시되어야 함 (혹시 봇 메시지에 "제임스 그만해!" 포함되어도 상태 변화 X)
+    assert(
+      isThreadMuted([
+        { text: "제임스! 안녕", ts: "1" },
+        { text: "제임스 그만해!라고 말하면 멈춰요", ts: "2", bot_id: "B01" },
+      ]),
+      false
+    );
+  }
+
   buildLengthHintTest() {
     assert(buildLengthHint("").includes("0자다"), true);
     assert(buildLengthHint("짧은 말").includes("한 줄 이내"), true);

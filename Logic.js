@@ -1,7 +1,29 @@
 const TRIGGER_KEYWORD = "제임스!";
+const MUTE_COMMAND = "제임스 그만해!";
+const UNMUTE_COMMAND = "제임스 다시 시작해!";
 
 function isRespondTarget(text) {
   return typeof text === "string" && text.startsWith(TRIGGER_KEYWORD);
+}
+
+function isMuteCommand(text) {
+  return typeof text === "string" && text.startsWith(MUTE_COMMAND);
+}
+
+function isUnmuteCommand(text) {
+  return typeof text === "string" && text.startsWith(UNMUTE_COMMAND);
+}
+
+function isThreadMuted(threadMessages) {
+  if (!threadMessages || threadMessages.length === 0) return false;
+  let muted = false;
+  for (let i = 0; i < threadMessages.length; i++) {
+    const msg = threadMessages[i];
+    if (msg.bot_id) continue;
+    if (isMuteCommand(msg.text)) muted = true;
+    else if (isUnmuteCommand(msg.text)) muted = false;
+  }
+  return muted;
 }
 
 function isTriggeredThread(threadMessages) {
