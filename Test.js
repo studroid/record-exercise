@@ -123,10 +123,11 @@ class TestCases {
 
   buildLengthHintTest() {
     assert(buildLengthHint("").includes("0자다"), true);
-    assert(buildLengthHint("짧은 말").includes("한 줄 이내"), true);
-    assert(buildLengthHint("a".repeat(50)).includes("2~4줄"), true);
-    assert(buildLengthHint("a".repeat(200)).includes("중간 길이"), true);
-    assert(buildLengthHint("a".repeat(500)).includes("구조화"), true);
+    assert(buildLengthHint("a".repeat(50)).includes("50자다"), true);
+    const out = buildLengthHint("test");
+    assert(out.includes("기본 분량: 2~3줄"), true);
+    assert(out.includes("4~8줄"), true);
+    assert(out.includes("단어 하나 단답은 피할 것"), true);
   }
 
   buildGeminiContentsTest() {
