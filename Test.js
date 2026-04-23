@@ -147,6 +147,8 @@ class TestCases {
     assert(out.includes("톤 미세조정"), true);
     assert(out.includes("차분"), true);
     assert(out.includes('"^^7"'), true);
+    assert(out.includes("3~4번 응답에 한 번"), true);
+    assert(out.includes("마침표"), true);
   }
 
   buildLengthHintTest() {
