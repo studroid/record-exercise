@@ -14,6 +14,17 @@ class SlackAPI {
     this._callAPI("post", "chat.postMessage", payload);
   }
 
+  getThreadMessages(channel, threadTs) {
+    const payload = {
+      'token': this.botToken,
+      'channel': channel,
+      'ts': threadTs,
+    };
+
+    const response = this._callAPI("get", "conversations.replies", payload);
+    return (response && response.messages) ? response.messages : [];
+  }
+
   reactWithEmoji(slackEvent) {
     const payload = {
       'token': this.botToken,
