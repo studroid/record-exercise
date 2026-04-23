@@ -51,7 +51,32 @@ function doPost(e) {
   logTextToSheet(slackEvent.text);
   slackAPI.reactWithEmoji(slackEvent);
 
-  const contents = buildGeminiContents(threadMessages, slackEvent.text);
+  const nameCache = {};
+  const resolveName = function (userId) {
+    if (!userId) return null;
+    if (nameCache.hasOwnProperty(userId)) return nameCache[userId];
+    let name = null;
+    try {
+      name = slackAPI.getDisplayNameFromUserId(userId);
+    } catch (err) {
+      console.error("getDisplayNameFromUserId failed for " + userId + ": " + err);
+    }
+    nameCache[userId] = name;
+    return name;
+  };
+
+  const annotatedMessages = threadMessages.map(function (msg) {
+    if (msg.bot_id) return msg;
+    const name = resolveName(msg.user);
+    return name ? Object.assign({}, msg, { text: name + ": " + msg.text }) : msg;
+  });
+
+  const currentUserName = resolveName(slackEvent.user);
+  const fallbackText = currentUserName
+    ? currentUserName + ": " + slackEvent.text
+    : slackEvent.text;
+
+  const contents = buildGeminiContents(annotatedMessages, fallbackText);
   const geminiAPI = new GeminiAPI(GEMINI_API_KEY, GEMINI_MODEL);
 
   let replyText = null;

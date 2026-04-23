@@ -3,6 +3,27 @@ class SlackAPI {
     this.botToken = botToken;
   }
 
+  getDisplayNameFromUserId(userId) {
+    const cache = CacheService.getScriptCache();
+    const cacheKey = "user:" + userId;
+    const cached = cache.get(cacheKey);
+    if (cached) return cached;
+
+    const payload = {
+      'token': this.botToken,
+      'user': userId,
+    };
+    const response = this._callAPI("get", "users.info", payload);
+    if (!response || !response.user) return null;
+
+    const profile = response.user.profile || {};
+    const name = profile.display_name || response.user.real_name || null;
+    if (name) {
+      cache.put(cacheKey, name, 3600);
+    }
+    return name;
+  }
+
   postThreadMessage(channel, threadTs, text) {
     const payload = {
       'token': this.botToken,
