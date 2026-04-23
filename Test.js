@@ -46,6 +46,14 @@ class TestCases {
     );
   }
 
+  buildLengthHintTest() {
+    assert(buildLengthHint("").includes("0자다"), true);
+    assert(buildLengthHint("짧은 말").includes("한 줄 이내"), true);
+    assert(buildLengthHint("a".repeat(50)).includes("2~4줄"), true);
+    assert(buildLengthHint("a".repeat(200)).includes("중간 길이"), true);
+    assert(buildLengthHint("a".repeat(500)).includes("구조화"), true);
+  }
+
   buildGeminiContentsTest() {
     assertDeep(buildGeminiContents([], "hello"), [
       { role: "user", parts: [{ text: "hello" }] },

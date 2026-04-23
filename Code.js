@@ -79,9 +79,11 @@ function doPost(e) {
   const contents = buildGeminiContents(annotatedMessages, fallbackText);
   const geminiAPI = new GeminiAPI(GEMINI_API_KEY, GEMINI_MODEL);
 
+  const systemInstruction = PERSONA_PROMPT + "\n\n" + buildLengthHint(slackEvent.text);
+
   let replyText = null;
   try {
-    replyText = geminiAPI.generate(PERSONA_PROMPT, contents);
+    replyText = geminiAPI.generate(systemInstruction, contents);
   } catch (err) {
     console.error("Gemini generate failed: " + err);
   }
