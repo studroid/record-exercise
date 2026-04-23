@@ -43,16 +43,21 @@ function buildGeminiContents(threadMessages, fallbackText) {
   });
 }
 
-const GEMINI_FAILURE_MESSAGES = [
-  "에... 머리가 잠깐 멎었슴다 ^^7 다시 여쭤봐 주시죠",
-  "크흠... 뇌세포 쉬는 시간인감요. 잠시 후 다시 부탁드립니닷",
-  "어음... 비범한 사람에게도 쉬는 시간이 필요합니닷 ^^7",
-  "아잇 잠쉬만요호오오... 금방 돌아오겟슴다",
-];
+const GEMINI_FAILURE_MESSAGES = {
+  rate_limit:
+    "크흠... Gemini 호출 한도를 다 썼습니다. 잠시 후 다시 여쭤 주시죠 ^^",
+  api_error:
+    "음... Gemini 쪽에서 오류가 반환됐습니다. 잠시 후 다시 한 번 부탁드립니닷",
+  bad_response:
+    "흠, 응답을 제대로 뽑아내지 못했습니닷. 질문을 살짝 바꿔 다시 여쭤봐 주시죠 ^^",
+  network:
+    "네트워크 호출이 실패했습니닷. 잠시 후 다시 시도 부탁드립니다",
+  unknown:
+    "알 수 없는 이유로 응답이 막혔습니닷. 잠시 후 다시 시도 부탁드립니다",
+};
 
-function pickFailureMessage() {
-  const i = Math.floor(Math.random() * GEMINI_FAILURE_MESSAGES.length);
-  return GEMINI_FAILURE_MESSAGES[i];
+function pickFailureMessage(reason) {
+  return GEMINI_FAILURE_MESSAGES[reason] || GEMINI_FAILURE_MESSAGES.unknown;
 }
 
 function buildLengthHint(userText) {

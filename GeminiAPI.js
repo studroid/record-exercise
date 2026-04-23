@@ -29,18 +29,22 @@ class GeminiAPI {
     const code = response.getResponseCode();
     const text = response.getContentText();
 
+    if (code === 429) {
+      console.error("Gemini rate limit (429): " + text);
+      return { ok: false, reason: "rate_limit" };
+    }
     if (code < 200 || code >= 300) {
       console.error("Gemini API error " + code + ": " + text);
-      return null;
+      return { ok: false, reason: "api_error" };
     }
 
     const parsed = JSON.parse(text);
     const candidate = parsed && parsed.candidates && parsed.candidates[0];
     const part = candidate && candidate.content && candidate.content.parts && candidate.content.parts[0];
     if (!part || typeof part.text !== "string") {
-      console.error("Gemini API unexpected response: " + text);
-      return null;
+      console.error("Gemini unexpected response: " + text);
+      return { ok: false, reason: "bad_response" };
     }
-    return part.text;
+    return { ok: true, text: part.text };
   }
 }

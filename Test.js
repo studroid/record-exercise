@@ -98,12 +98,19 @@ class TestCases {
   }
 
   pickFailureMessageTest() {
-    for (let i = 0; i < 20; i++) {
-      const msg = pickFailureMessage();
+    const reasons = ["rate_limit", "api_error", "bad_response", "network", "unknown"];
+    for (const r of reasons) {
+      const msg = pickFailureMessage(r);
       assert(typeof msg === "string", true);
       assert(msg.length > 0, true);
-      assert(GEMINI_FAILURE_MESSAGES.indexOf(msg) !== -1, true);
+      assert(msg === GEMINI_FAILURE_MESSAGES[r], true);
     }
+    // Unknown/undefined reason falls back to 'unknown' message
+    assert(pickFailureMessage("something_weird"), GEMINI_FAILURE_MESSAGES.unknown);
+    assert(pickFailureMessage(undefined), GEMINI_FAILURE_MESSAGES.unknown);
+    assert(pickFailureMessage(null), GEMINI_FAILURE_MESSAGES.unknown);
+    // Rate limit message should mention 한도
+    assert(pickFailureMessage("rate_limit").includes("한도"), true);
   }
 
   buildLengthHintTest() {

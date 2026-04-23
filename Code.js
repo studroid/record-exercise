@@ -94,14 +94,16 @@ function doPost(e) {
 
   const systemInstruction = PERSONA_PROMPT + "\n\n" + buildLengthHint(slackEvent.text);
 
-  let replyText = null;
+  let result;
   try {
-    replyText = geminiAPI.generate(systemInstruction, contents);
+    result = geminiAPI.generate(systemInstruction, contents);
   } catch (err) {
-    console.error("Gemini generate failed: " + err);
+    console.error("Gemini generate threw: " + err);
+    result = { ok: false, reason: "network" };
   }
 
-  const outgoingText = replyText || pickFailureMessage();
+  const outgoingText =
+    result && result.ok ? result.text : pickFailureMessage(result && result.reason);
   slackAPI.postThreadMessage(slackEvent.channel, threadRoot, outgoingText);
 }
 
