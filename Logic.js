@@ -54,7 +54,7 @@ function isFirstBotResponseInThread(threadMessages) {
 function buildCommandHint() {
   return (
     "\n\n" +
-    '> 💡 `제임스 그만해!`로 멈출 수 있고, `제임스 다시 시작해!`로 다시 부를 수 있습니다.'
+    '> 💡 `제임스 그만해!`로 멈출 수 있고, `제임스 다시 시작해!`로 다시 부를 수 있어요!'
   );
 }
 
