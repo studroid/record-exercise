@@ -4,3 +4,7 @@ const SLACK_BOT_TOKEN = "";
 // Log
 const LOG_SHEET_ID = "";
 const LOG_SHEET_NAME = "";
+
+// Gemini
+const GEMINI_API_KEY = "";
+const GEMINI_MODEL = "gemini-3-flash-preview";
