@@ -141,16 +141,6 @@ class TestCases {
     assert(hint.includes("제임스 다시 시작해!"), true);
   }
 
-  buildToneCalibrationTest() {
-    const out = buildToneCalibration();
-    assert(typeof out === "string", true);
-    assert(out.includes("톤 미세조정"), true);
-    assert(out.includes("차분"), true);
-    assert(out.includes('"^^7"'), true);
-    assert(out.includes("3~4번 응답에 한 번"), true);
-    assert(out.includes("마침표"), true);
-  }
-
   buildLengthHintTest() {
     assert(buildLengthHint("").includes("0자다"), true);
     assert(buildLengthHint("a".repeat(50)).includes("50자다"), true);

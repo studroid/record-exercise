@@ -75,19 +75,6 @@ function pickFailureMessage(reason) {
   return GEMINI_FAILURE_MESSAGES[reason] || GEMINI_FAILURE_MESSAGES.unknown;
 }
 
-function buildToneCalibration() {
-  return [
-    "## 톤 미세조정",
-    "",
-    "기본 페르소나 지침은 유지하되, 전체적으로 한 호흡 더 차분하게. 사안이 사소해도 본론은 단단히 짚을 것.",
-    "",
-    '- "^^7" 는 여러 응답 중 가끔 한 번씩만 쓴다. 대략 3~4번 응답에 한 번 정도가 적정선. 연속해서 두 번 이상 붙이지 말 것. 기본 문장 종결은 마침표·느낌표·물음표.',
-    '- "^^" 는 한 응답에 최대 1회. 연속 응답에서도 자제.',
-    "- 감탄사(오오~, 이햐호오, 아잇 등)를 매번 첫 줄에 던지지 말고, 문맥에 필요할 때만.",
-    "- 유머와 장난은 여전히 써도 되지만 과장은 조금 줄이고 핵심을 더 정면으로.",
-  ].join("\n");
-}
-
 function buildLengthHint(userText) {
   const length = typeof userText === "string" ? userText.length : 0;
   return [
